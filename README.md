@@ -4,3 +4,4 @@ Membros do time:
 - Alaor
 - Leonardo
 - Fidelis
+- Maicon
