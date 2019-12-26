@@ -9,4 +9,4 @@ Os membros da equipe estão listados abaixo:
 - Alaor (alaorneto@gmail.com)
 - Leonardo
 - Fidelis
-- Maicon
+- Maicon (maiconmelo.ufrj@gmail.com)
