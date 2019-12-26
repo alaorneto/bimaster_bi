@@ -7,6 +7,6 @@ Este repositório é destinado ao trabalho de conclusão da disciplina de BI - B
 
 Os membros da equipe estão listados abaixo:
 - Alaor (alaorneto@gmail.com)
-- Leonardo
+- Leonardo (lcvicente@gmail.com)
 - Fidelis
 - Maicon (maiconmelo.ufrj@gmail.com)
