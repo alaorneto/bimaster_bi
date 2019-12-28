@@ -1,4 +1,4 @@
-# Trabalho de conclusão da disciplina de BI
+# Primeiro Trabalho da disciplina de BI
 
 ## Descrição
 Este repositório é destinado ao trabalho de conclusão da disciplina de BI - Business Intelligence da pós-graduação BIMASTER da PUC-RIO.
