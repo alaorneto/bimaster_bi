@@ -10,3 +10,6 @@ Os membros da equipe estão listados abaixo:
 - Leonardo (lcvicente@gmail.com)
 - Fidelis (danielfidelis@hotmail.com)
 - Maicon (maiconmelo.ufrj@gmail.com)
+
+## Dica
+Baixar o GitHub Desktop
