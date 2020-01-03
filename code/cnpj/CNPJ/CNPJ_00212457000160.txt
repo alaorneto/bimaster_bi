@@ -1,0 +1,15 @@
+Nome: 10 TABELIONATO DE NOTAS
+Nome fantasia: 10 TABELIONATO DE NOTAS
+CNPJ: 00.212.457/0001-60
+Data de abertura: 26/09/1994
+Natureza: 303-4 - Serviço Notarial e Registral (Cartório)
+Situação: ATIVA
+Situação especial:   Tipo: MATRIZ
+Motivo Situação especial: 
+Data da situação: 03/11/2005
+Atividade principal: 69.11-7-01 - Serviços advocatícios
+Atividades secundárias: 00.00-0-00 - Não informada
+Endereço: RUA CASIMIRO MONTENEGRO, 70,  FORTALEZA, CE
+Telefone: (85) 3281-0090
+Email: administrativo@cartoriomoreiradedeus.not.br
+
