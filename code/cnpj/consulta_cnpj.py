@@ -75,7 +75,7 @@ def armazenar_cnpj(cnpj, dados_cnpj, bd):
     print(f"Armazenando CNPJ {cnpj}...")
     atividade_principal = dados_cnpj[c_atividade_principal][0][c_texto_atividade]
     uf = dados_cnpj[c_uf]
-    municipio = dados_cnpj[c_municipio]
+    municipio = (dados_cnpj[c_municipio]).replace("'","")
     situacao = dados_cnpj[c_situacao]
     if situacao in c_situacoes_inativas:
         atividade_principal = c_atividade_sem_descricao
