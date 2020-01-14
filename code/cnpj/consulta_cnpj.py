@@ -33,20 +33,40 @@ c_texto_atividade = 'text'
 c_cnpj_invalidos = {'-2'}
 c_campo_cnpj_favorecido = 'CNPJ OU CPF FAVORECIDO'
 c_arquivo_ini = 'config.ini'
+c_tipo_csv = "csv"
+c_tipo_cnpj = "cnpj"
 
 
 ''' Functions '''          
 def cnpj_valido(cnpj):
-    return False if len(cnpj) != 14 else True
-    
-def obter_lista_cnpj(file, bd):
+    return False if (len(cnpj) != 14 or cnpj in c_cnpj_invalidos) else True
+
+def ler_dados_csv(arquivo):
     conjunto_cnpj = set()
-    with open(file, mode='r') as csv_file:
+    with open(arquivo, mode='r') as csv_file:
         csv_reader = csv.DictReader(csv_file, delimiter=';')
         for row in csv_reader:
             cnpj = row[c_campo_cnpj_favorecido]
-            if cnpj not in c_cnpj_invalidos and cnpj_valido(cnpj):
+            if cnpj_valido(cnpj):
                 conjunto_cnpj.add(cnpj)
+    return conjunto_cnpj
+
+def ler_dados_txt(arquivo):
+    conjunto_cnpj = set()
+    with open(arquivo, mode='r') as txt_file:
+        conteudo = txt_file.readlines()
+        for cnpj in conteudo:
+            cnpj = cnpj.rstrip()
+            if cnpj_valido(cnpj):
+                conjunto_cnpj.add(cnpj)
+    return conjunto_cnpj
+    
+def obter_lista_cnpj(arquivo, tipo, bd):
+    
+    if tipo == c_tipo_csv:
+        conjunto_cnpj = ler_dados_csv(arquivo)
+    else:
+        conjunto_cnpj = ler_dados_txt(arquivo)
             
     aux_conjunto = conjunto_cnpj.copy()
     for cnpj in aux_conjunto: 
@@ -102,8 +122,9 @@ def encerrar_sessao_postgre(bd):
 def interpretar_argumentos():
     parser = argparse.ArgumentParser()
     parser.add_argument('--arquivo')
+    parser.add_argument('--tipo')
     argumentos = parser.parse_args()
-    return argumentos.arquivo
+    return argumentos.arquivo, argumentos.tipo
 
 def multiplo(m, n):
 	return True if m % n == 0 else False
@@ -120,12 +141,27 @@ def ler_configuracao():
     configuracao["host_bd"] = config['BD']['HOST']
     return configuracao
 
+def gravar_cnpj(lista_cnpj, num_arquivos):
+    total_cnpjs = len(lista_cnpj)
+    cnpjs_por_arquivo = total_cnpjs/num_arquivos
+    indice_arquivo = 1
+    conteudo = ""
+    for indice, cnpj in enumerate(lista_cnpj):
+        cnpjs_consultados = indice + 1
+        conteudo = conteudo + cnpj + '\n'
+        if multiplo(cnpjs_consultados, cnpjs_por_arquivo):
+            nome_arquivo = f"../../dados/dados_segregados/CNPJ{indice_arquivo}.txt"
+            with open(nome_arquivo, 'w') as arquivo:
+                arquivo.write(conteudo)
+            conteudo = ""
+            indice_arquivo = indice_arquivo + 1 
+
 ''' Main program '''
 def main():
-    caminho_arquivo_csv = interpretar_argumentos()
+    (arquivo, tipo) = interpretar_argumentos()
     configuracao = ler_configuracao()
     bd = abrir_sessao_postgre(configuracao)
-    lista_cnpj = obter_lista_cnpj(caminho_arquivo_csv, bd)
+    lista_cnpj = obter_lista_cnpj(arquivo, tipo, bd)
     total_cnpjs = len(lista_cnpj)
     print(f"Total de CNPJs a serem consultados: {total_cnpjs}")
     
