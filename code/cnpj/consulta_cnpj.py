@@ -41,6 +41,7 @@ c_tipo_cnpj = "cnpj"
 def cnpj_valido(cnpj):
     return False if (len(cnpj) != 14 or cnpj in c_cnpj_invalidos) else True
 
+
 def ler_dados_csv(arquivo):
     conjunto_cnpj = set()
     with open(arquivo, mode='r') as csv_file:
@@ -51,6 +52,7 @@ def ler_dados_csv(arquivo):
                 conjunto_cnpj.add(cnpj)
     return conjunto_cnpj
 
+
 def ler_dados_txt(arquivo):
     conjunto_cnpj = set()
     with open(arquivo, mode='r') as txt_file:
@@ -60,7 +62,8 @@ def ler_dados_txt(arquivo):
             if cnpj_valido(cnpj):
                 conjunto_cnpj.add(cnpj)
     return conjunto_cnpj
-    
+
+   
 def obter_lista_cnpj(arquivo, tipo, bd):
     
     if tipo == c_tipo_csv:
@@ -76,7 +79,8 @@ def obter_lista_cnpj(arquivo, tipo, bd):
             conjunto_cnpj.remove(cnpj)
     
     return conjunto_cnpj
-    
+
+
 def executar_consulta_postgre(bd, sql):
     cursor = bd.cursor()
     cursor.execute(sql)
@@ -85,11 +89,13 @@ def executar_consulta_postgre(bd, sql):
         return True
     return False
 
+
 def inserir_dados_postgre(bd, sql):
     cursor = bd.cursor()
     cursor.execute(sql)
     bd.commit()
     cursor.close()
+
 
 def armazenar_cnpj(cnpj, dados_cnpj, bd):
     print(f"Armazenando CNPJ {cnpj}...")
@@ -103,6 +109,7 @@ def armazenar_cnpj(cnpj, dados_cnpj, bd):
     inserir_dados_postgre(bd, sql)
     print(f"CNPJ {cnpj} inserido com sucesso!")    
 
+
 def buscar_cnpj(cnpj):
     url_receita = c_api_receita + cnpj
     requisicao_http = urllib.request.build_opener()
@@ -112,12 +119,19 @@ def buscar_cnpj(cnpj):
     dados_cnpj = json.loads(retorno_http)
     return dados_cnpj
 
+
 def abrir_sessao_postgre(config):
-    bd = psycopg2.connect(host=config["host_bd"], database=config["nome_bd"], user=config["usuario_bd"])
+    bd = None
+    if config["senha_bd"]:
+        bd = psycopg2.connect(host=config["host_bd"], database=config["nome_bd"], user=config["usuario_bd"], password=config["senha_bd"])
+    else:
+        bd = psycopg2.connect(host=config["host_bd"], database=config["nome_bd"], user=config["usuario_bd"])
     return bd
+
 
 def encerrar_sessao_postgre(bd):
     bd.close()
+
 
 def interpretar_argumentos():
     parser = argparse.ArgumentParser()
@@ -126,11 +140,14 @@ def interpretar_argumentos():
     argumentos = parser.parse_args()
     return argumentos.arquivo, argumentos.tipo
 
+
 def multiplo(m, n):
 	return True if m % n == 0 else False
 
+
 def dormir(tempo):
     time.sleep(tempo)
+
 
 def ler_configuracao():
     config = configparser.ConfigParser()
@@ -139,7 +156,9 @@ def ler_configuracao():
     configuracao["nome_bd"] = config['BD']['NOME']
     configuracao["usuario_bd"] = config['BD']['USUARIO']
     configuracao["host_bd"] = config['BD']['HOST']
+    configuracao["senha_bd"] = config['BD']['SENHA']
     return configuracao
+
 
 def gravar_cnpj(lista_cnpj, num_arquivos):
     total_cnpjs = len(lista_cnpj)
@@ -155,6 +174,7 @@ def gravar_cnpj(lista_cnpj, num_arquivos):
                 arquivo.write(conteudo)
             conteudo = ""
             indice_arquivo = indice_arquivo + 1 
+
 
 ''' Main program '''
 def main():
