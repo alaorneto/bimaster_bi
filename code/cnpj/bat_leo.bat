@@ -1,0 +1,1 @@
+python "C:\Users\Leonardo\OneDrive\Estudo\PSBI~1-DESKTOP-LUOCPGV\Trabalho BI 2019.2\code\cnpj\consulta_cnpj_leo.py"
