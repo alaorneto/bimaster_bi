@@ -1,0 +1,19 @@
+Tarefas a serem implementadas para criação e carga do DW.
+
+- Criação do banco SA : 
+
+1- Executar dados_favorecidos.sql (faz a carga de todas as consultas dos CNPJ´s do site da Receita);
+2- Executar sem_cnpj_favorecido.sql (faz a carga do CNPJ para os casos de CNPJ para saque, sigiloso e sem informação).
+	
+
+- Criação da estrutura do banco DW
+
+1-Executar o sql criacao_banco_multidimensional_v3.sql (faz a criação da estrutura do DW de acordo com o modelo gerado no Power Architect).
+	
+- Carga do DW:
+
+1- Utilizar o CSV do arquivo cartao_full;
+2- Executar a Carga dim_favorecido.ktr (Carga, utilizando transformação PDI, da tabela dimensão favorecido da transação); Tempo: < 1 minuto
+3- Executar a Carga dim_responsavel.ktr (Carga, utilizando transformação PDI, da tabela dimensão responsável da transação); Tempo: < 1 minuto
+4- Executar o sql dim_tempo.sql (Carga, utilizando script SQL, da tabela dimensão tempo);Tempo: < 2 segundos
+5- Executar a Carga ft_transacao.ktr (Carga, utilizando transformação PDI, da tabela fato das transações). Tempo: > 3 horas
