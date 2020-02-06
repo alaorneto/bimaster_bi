@@ -44,7 +44,7 @@ def cnpj_valido(cnpj):
 
 def ler_dados_csv(arquivo):
     conjunto_cnpj = set()
-    with open(arquivo, mode='r') as csv_file:
+    with open(arquivo, mode='r', encoding="latin1") as csv_file:
         csv_reader = csv.DictReader(csv_file, delimiter=';')
         for row in csv_reader:
             cnpj = row[c_campo_cnpj_favorecido]
